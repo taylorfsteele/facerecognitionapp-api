@@ -6,13 +6,14 @@ const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image')
+require('dotenv').config();
 
 const db = knex({
     client: 'pg',
     connection: {
         host: '127.0.0.1',
         user: 'postgres',
-        password: 'test',
+        password: process.env.DB_PASS,
         database: 'smart-brain'
     }
 });
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use(cors());
 
 //Normal route & function
-app.get('/', (req, res) => { res.send('Server is working') });
+app.get('/', (req, res) => { res.send('Server is running') });
 
 //Shorthand function - req & res automatically passed to function. Call them in the controller
 app.post('/signin', signin.handleSignin(bcrypt, db));
